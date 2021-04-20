@@ -2,6 +2,10 @@
 
 Just another select component for React. Created for [Autarkis](https://github.com/yigitlevent/autarkis).
 
+## Installation
+
+`npm install react-basic-select`
+
 ## Basic Usage
 
 ```
