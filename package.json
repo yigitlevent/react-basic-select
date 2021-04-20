@@ -1,7 +1,7 @@
 {
 	"name": "react-basic-select",
 	"version": "0.1.1",
-	"description": "Just anpther Select component for React",
+	"description": "Just another Select component for React",
 	"author": "Yiğit Levent",
 	"license": "MIT",
 	"private": false,
