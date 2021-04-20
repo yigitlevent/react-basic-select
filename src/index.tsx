@@ -1,9 +1,9 @@
 import { createRef, useEffect, useState } from "react";
 import Fuse from "fuse.js";
 
-interface Option { name: string; value: string; header?: boolean; }
-interface Group { name: string; value: string; options: Option[]; }
-interface SelectProps {
+export interface Option { name: string; value: string; header?: boolean; }
+export interface Group { name: string; value: string; options: Option[]; }
+export interface SelectProps {
 	options: string[] | Option[] | Group[];
 	onOptionSelect?: (value: Option) => void;
 	onSelectedChange?: (values: Option[]) => void;
