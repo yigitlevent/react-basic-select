@@ -13,6 +13,6 @@ export default {
 			strict: false
 		}
 	],
-	plugins: [typescript()],
-	external: ["react", "react-dom", "fuse.js", "react/jsx-runtime", "temp.css"]
+	plugins: [typescript({ tsconfig: "./tsconfig.json" })],
+	external: ["react", "react-dom", "fuse.js"]
 };

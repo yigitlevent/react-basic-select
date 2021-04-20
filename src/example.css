@@ -1,11 +1,11 @@
-.easyselect_select {
+.basicselect_select {
 	min-width: 120px;
 	min-height: 30px;
 	display: block;
 	font-size: 1em;
 }
 
-.easyselect_bar {
+.basicselect_bar {
 	width: inherit;
 	height: inherit;
 	padding: 2px;
@@ -14,12 +14,12 @@
 	grid-template-rows: 1fr;
 }
 
-.easyselect_selectedall {
+.basicselect_selectedall {
 	height: 100%;
 	width: 100%;
 }
 
-.easyselect_selected {
+.basicselect_selected {
 	width: max-content;
 	height: 26px;
 	outline: 1px #ff0000 solid;
@@ -27,15 +27,15 @@
 	cursor: pointer;
 }
 
-.easyselect_input {
+.basicselect_input {
 	min-width: 60px;
 }
 
-.easyselect_options {
+.basicselect_options {
 	display: none;
 }
 
-.easyselect_options.show {
+.basicselect_options.show {
 	display: block;
 	position: relative;
 	top: 0;
@@ -43,14 +43,14 @@
 	max-height: 120px;
 }
 
-.easyselect_optionnew {
+.basicselect_optionnew {
 	cursor: pointer;
 }
 
-.easyselect_header {
+.basicselect_header {
 	font-size: 1.1em;
 }
 
-.easyselect_option {
+.basicselect_option {
 	cursor: pointer;
 }
