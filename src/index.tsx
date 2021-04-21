@@ -59,19 +59,17 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 			}
 
 			if ((create || mainOptions.findIndex((v) => v.value === value.value) > -1)) {
+				let newSelected = [...selectedOptions];
+
 				if (selectedOptions.findIndex((v) => v.value === value.value) === -1) {
-					if (multi) { setSelectedOptions([...selectedOptions, value]); }
-					else { setSelectedOptions([value]); }
+					if (multi) { newSelected = [...selectedOptions, value]; }
+					else { newSelected = [value]; }
 				}
 				else if (!disabled) {
-					const selected = [...selectedOptions];
-					const index = selected.findIndex((v) => v.value === value.value);
-					if (index > -1) {
-						selected.splice(index, 1);
-						setSelectedOptions(selected);
-					}
+					const index = newSelected.findIndex((v) => v.value === value.value);
+					if (index > -1) { newSelected.splice(index, 1); }
 				}
-
+				setSelectedOptions(newSelected);
 				if (onSelectedChange) onSelectedChange(selectedOptions);
 			}
 		};
