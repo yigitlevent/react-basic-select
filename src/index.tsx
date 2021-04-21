@@ -70,7 +70,7 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 					if (index > -1) { newSelected.splice(index, 1); }
 				}
 				setSelectedOptions(newSelected);
-				if (onSelectedChange) onSelectedChange(selectedOptions);
+				if (onSelectedChange) onSelectedChange(newSelected);
 			}
 		};
 
