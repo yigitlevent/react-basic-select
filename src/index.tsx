@@ -13,12 +13,13 @@ export interface SelectProps {
 	disabled?: boolean;
 	closeOnSelect?: boolean;
 	appendGroupValue?: boolean;
+	showAsText?: boolean;
 	create?: boolean;
 	createString?: string;
 	placeholder?: string;
 };
 
-function Select({ options, multi, search, disabled, closeOnSelect, appendGroupValue, create, createString, placeholder, onOptionSelect, onSelectedChange, onInputChange }: SelectProps): JSX.Element {
+function Select({ options, multi, search, disabled, closeOnSelect, appendGroupValue, showAsText, create, createString, placeholder, onOptionSelect, onSelectedChange, onInputChange }: SelectProps): JSX.Element {
 	const [mainOptions, setMainOptions] = useState<Option[]>([]);
 	const [userOptions, setUserOptions] = useState<Option[]>([]);
 
@@ -117,6 +118,8 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 		return <span key={v.name} className="basicselect_selected" onClick={() => selectOption(v)}>{v.name}</span>;
 	});
 
+	const selectedStrings = selectedOptions.map((v) => { return v.name; });
+
 	const filteredElements = filteredOptions.map((v) => {
 		return <div key={v.name} className={`${(v.header) ? "basicselect_header" : "basicselect_option"}`} onClick={() => { if (!v.header) selectOption(v); }}>{v.name}</div>;
 	});
@@ -126,8 +129,9 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 
 			<div className="basicselect_bar">
 
+
 				<div className="basicselect_selectedall">
-					{selectedElements}
+					{(showAsText) ? selectedStrings.join(", ") : selectedElements}
 				</div>
 
 				<input
