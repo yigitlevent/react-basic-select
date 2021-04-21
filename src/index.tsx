@@ -7,6 +7,7 @@ export interface SelectProps {
 	options: string[] | Option[] | Group[];
 	onOptionSelect?: (value: Option) => void;
 	onSelectedChange?: (values: Option[]) => void;
+	onInputChange?: (values: string) => void;
 	multi?: boolean;
 	search?: boolean;
 	disabled?: boolean;
@@ -17,7 +18,7 @@ export interface SelectProps {
 	placeholder?: string;
 };
 
-function Select({ options, multi, search, disabled, closeOnSelect, appendGroupValue, create, createString, placeholder, onOptionSelect, onSelectedChange }: SelectProps): JSX.Element {
+function Select({ options, multi, search, disabled, closeOnSelect, appendGroupValue, create, createString, placeholder, onOptionSelect, onSelectedChange, onInputChange }: SelectProps): JSX.Element {
 	const [mainOptions, setMainOptions] = useState<Option[]>([]);
 	const [userOptions, setUserOptions] = useState<Option[]>([]);
 
@@ -50,6 +51,8 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 
 	const selectOption = (value?: Option) => {
 		if (value) {
+			if (onOptionSelect) onOptionSelect(value);
+
 			if (create && userOptions.findIndex((v) => v.value === value.value) === -1) {
 				setUserOptions([...userOptions, value]);
 			}
@@ -67,9 +70,9 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 						setSelectedOptions(selected);
 					}
 				}
-			}
 
-			if (onOptionSelect) onOptionSelect(value);
+				if (onSelectedChange) onSelectedChange(selectedOptions);
+			}
 		};
 
 		if (closeOnSelect) switchOptions(false);
@@ -137,7 +140,7 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 					onChange={(e) => {
 						setInputValues(e.target.value);
 						filterOptions(e.target.value);
-						if (onSelectedChange) onSelectedChange(selectedOptions);
+						if (onInputChange) onInputChange(e.target.value);
 					}}
 					onFocus={() => switchOptions(true)}
 				/>
