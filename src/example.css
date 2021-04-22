@@ -1,13 +1,15 @@
 .basicselect_select {
-	min-width: 120px;
+	width: 100%;
+	max-width: 100%;
 	min-height: 30px;
 	display: block;
 	font-size: 1em;
+	overflow: hidden;
 }
 
 .basicselect_bar {
 	width: inherit;
-	height: inherit;
+	height: 100%;
 	padding: 2px;
 	display: grid;
 	grid-template-columns: max-content 1fr;
@@ -17,40 +19,48 @@
 .basicselect_selectedall {
 	height: 100%;
 	width: 100%;
+	line-height: 1.6em;
 }
 
 .basicselect_selected {
 	width: max-content;
 	height: 26px;
-	outline: 1px #ff0000 solid;
-	margin: 0 2px;
+	margin: 0 2px 0 0;
+	padding: 2px 4px;
 	cursor: pointer;
+	display: inline-block;
+	line-height: 1.4em;
 }
 
 .basicselect_input {
 	min-width: 60px;
+	display: inline-block;
 }
 
 .basicselect_options {
-	display: none;
-}
-
-.basicselect_options.show {
 	display: block;
-	position: relative;
-	top: 0;
-	left: 0;
-	max-height: 120px;
+	position: fixed;
+	max-height: 240px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 352px;
 }
 
 .basicselect_optionnew {
 	cursor: pointer;
+	width: inherit;
+	padding: 2px 4px;
 }
 
 .basicselect_header {
 	font-size: 1.1em;
+	width: inherit;
+	padding: 2px 4px;
+	text-transform: uppercase;
 }
 
 .basicselect_option {
 	cursor: pointer;
+	width: inherit;
+	padding: 2px 4px;
 }

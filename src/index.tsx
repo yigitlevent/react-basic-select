@@ -119,7 +119,15 @@ function Select({ options, multi, search, disabled, closeOnSelect, appendGroupVa
 	const selectedStrings = selectedOptions.map((v) => { return v.name; });
 
 	const filteredElements = filteredOptions.map((v) => {
-		return <div key={v.name} className={`${(v.header) ? "basicselect_header" : "basicselect_option"}`} onClick={() => { if (!v.header) selectOption(v); }}>{v.name}</div>;
+		return <div key={v.name}
+			className={`
+				${(v.header) ? "basicselect_header" : "basicselect_option"}
+				${(selectedOptions.findIndex((s) => s.value === v.value) > -1) ? "basicselect_option_selected" : ""}
+			`}
+			onClick={() => { if (!v.header) selectOption(v); }}
+		>
+			{v.name}
+		</div>;
 	});
 
 	return (
