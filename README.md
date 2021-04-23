@@ -59,3 +59,6 @@ cosnt groupArray = [
   },
 ]
 ```
+### CSS?
+
+Currently CSS isn't bundled with the compiled package, you have to code your own. But you can find an example CSS implementation in `src/example.css`, which lists all   the used classes.
