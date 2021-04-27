@@ -2,6 +2,8 @@
 
 Just another select component for React. Created for [Autarkis](https://github.com/yigitlevent/autarkis).
 
+[Demo](https://codesandbox.io/s/react-basic-select-33mt5)
+
 ## Why?
 
 Because I needed a small, mostly dependency-free Select component for my project. Figured people may use it as well.
