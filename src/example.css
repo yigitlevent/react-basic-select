@@ -1,13 +1,13 @@
-.basicselect_select {
-	width: 100%;
-	max-width: 100%;
-	min-height: 30px;
+.bs_select {
+	width: inherit;
+	height: 30px;
+	background: #aaa;
 	display: block;
 	font-size: 1em;
 	overflow: hidden;
 }
 
-.basicselect_bar {
+.bs_bar {
 	width: inherit;
 	height: 100%;
 	padding: 2px;
@@ -16,13 +16,14 @@
 	grid-template-rows: 1fr;
 }
 
-.basicselect_selectedall {
+.bs_selectedall {
 	height: 100%;
 	width: 100%;
 	line-height: 1.6em;
+	padding: 0 2px;
 }
 
-.basicselect_selected {
+.bs_selected {
 	width: max-content;
 	height: 26px;
 	margin: 0 2px 0 0;
@@ -30,41 +31,67 @@
 	cursor: pointer;
 	display: inline-block;
 	line-height: 1.4em;
+	background: #ddd;
 }
 
-.basicselect_input {
+.bs_input {
 	min-width: 60px;
 	display: inline-block;
+	background: inherit;
+	border: none;
 }
 
-.basicselect_options {
+.bs_options {
 	display: block;
 	position: fixed;
 	max-height: 240px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	width: 352px;
+	width: inherit;
+	border: 1px #fff solid;
 }
 
-.basicselect_optionnew {
+.bs_optionnew {
 	cursor: pointer;
 	width: inherit;
 	padding: 2px 4px;
+	background: #aaa;
+	border-bottom: 1px #fff dashed;
 }
 
-.basicselect_header {
+.bs_header {
 	font-size: 1.1em;
 	width: inherit;
 	padding: 2px 4px;
 	text-transform: uppercase;
+	background: #888;
+	border-bottom: 1px #fff dashed;
 }
 
-.basicselect_option {
+.bs_option {
 	cursor: pointer;
 	width: inherit;
 	padding: 2px 4px;
+	background: #aaa;
+	border-bottom: 1px #fff dashed;
 }
 
-.basicselect_option_selected {
-	
+.bs_none {
+	cursor: pointer;
+	width: inherit;
+	padding: 2px 4px;
+	background: #aaa;
+	border-bottom: 1px #fff dashed;
+}
+
+.bs_option:hover:after {
+	content: " +";
+}
+
+.bs_option_selected {
+	color: #005500;
+}
+
+.bs_option_selected:hover:after {
+	content: " –";
 }
