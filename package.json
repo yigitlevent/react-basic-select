@@ -1,6 +1,6 @@
 {
 	"name": "react-basic-select",
-	"version": "0.2.4",
+	"version": "0.3.3",
 	"description": "Just another Select component for React",
 	"author": "Yiğit Levent",
 	"license": "MIT",
@@ -18,26 +18,29 @@
 		"build": "rollup -c",
 		"start": "rollup -c -w"
 	},
+	"dependencies": {
+		"fuse.js": "^6.4.6"
+	},
 	"peerDependencies": {
 		"react": "^17",
 		"react-dom": "^17"
 	},
 	"devDependencies": {
 		"@rollup/plugin-typescript": "^8.2.1",
-		"@types/node": "^15.0.0",
-		"@types/react": "^17.0.4",
-		"@types/react-dom": "^17.0.3",
-		"@typescript-eslint/eslint-plugin": "^4.22.0",
-		"@typescript-eslint/parser": "^4.22.0",
+		"@types/node": "^15.0.2",
+		"@types/react": "^17.0.5",
+		"@types/react-dom": "^17.0.4",
+		"@typescript-eslint/eslint-plugin": "^4.23.0",
+		"@typescript-eslint/parser": "^4.23.0",
 		"babel-core": "^6.26.3",
 		"babel-runtime": "^6.26.0",
-		"eslint": "^7.25.0",
+		"eslint": "^7.26.0",
 		"eslint-config-react-app": "^6.0.0",
-		"eslint-plugin-json": "^2.1.2",
+		"eslint-plugin-json": "^3.0.0",
 		"eslint-plugin-react": "^7.23.2",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
-		"rollup": "^2.45.2",
+		"rollup": "^2.47.0",
 		"rollup-plugin-copy": "^3.4.0",
 		"typescript": "^4.2.4"
 	},
@@ -53,9 +56,11 @@
 	"keywords": [
 		"react",
 		"typescript",
-		"npm"
-	],
-	"dependencies": {
-		"fuse.js": "^6.4.6"
-	}
+		"npm",
+		"select",
+		"select-search",
+		"multi-select",
+		"react-select",
+		"fuse.js"
+	]
 }

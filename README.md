@@ -26,22 +26,23 @@ const options = ["Option 1", "Option 2", "Option 3"];
 
 ## Props
 
-| prop                  | type                              | default     | description                                              |
-| --------------------- | --------------------------------- | ----------- | -------------------------------------------------------- |
-| **options**           | `string[] \| Option[] \| Group[]` | `n/a`       | Array of either `string`, or `Option` or `Group` objects |
-| **multi?**            | `boolean`                         | `undefined` | Allow multiple selections                                |
-| **search?**           | `boolean`                         | `undefined` | Allow option search via input value                      |
-| **disabled?**         | `boolean`                         | `undefined` | Close option dropdown after selecting an option          |
-| **closeOnSelect?**    | `boolean`                         | `undefined` | Close option dropdown after selecting an option          |
-| **appendGroupValue?** | `boolean`                         | `undefined` | Prepends the `group.value` to `option.value`             |
-| **showAsText?**       | `boolean`                         | `undefined` | Shows the selected options as a string                   |
-| **create?**           | `boolean`                         | `undefined` | Allow user created options                               |
-| **createString?**     | `string`                          | `"Create:"` | Prefix text for user created option                      |
-| **placeholder?**      | `string`                          | `undefined` | Placeholder text for `input`                             |
-| **defaultSelected?**  | `string[] \| Option[] \| Group[]` | `undefined` | Selects value(s) when the Select element is rendered     |
-| **onOptionSelect?**   | `(value: Option) => void`         | `undefined` | Option Select callback                                   |
-| **onSelectedChange?** | `(values: Option[]) => void`      | `undefined` | Selected value(s) callback                               |
-| **onInputChange?**    | `(values: string) => void`        | `undefined` | Input value callback                                     |
+| prop                   | type                              | default     | description                                              |
+| ---------------------- | --------------------------------- | ----------- | -------------------------------------------------------- |
+| **options**            | `string[] \| Option[] \| Group[]` | `n/a`       | Array of either `string`, or `Option` or `Group` objects |
+| **multi?**             | `boolean`                         | `undefined` | Allow multiple selections                                |
+| **search?**            | `boolean`                         | `undefined` | Allow option search via input value                      |
+| **disabled?**          | `boolean`                         | `undefined` | Close option dropdown after selecting an option          |
+| **closeOnSelect?**     | `boolean`                         | `undefined` | Close option dropdown after selecting an option          |
+| **appendGroupValue?**  | `boolean`                         | `undefined` | Prepends the `group.value` to `option.value`             |
+| **showAsText?**        | `boolean`                         | `undefined` | Shows the selected options as a string                   |
+| **create?**            | `boolean`                         | `undefined` | Allow user created options                               |
+| **createString?**      | `string`                          | `"Create:"` | Prefix text for user created option                      |
+| **placeholder?**       | `string`                          | `undefined` | Placeholder text for `input`                             |
+| **defaultSelected?**   | `string[] \| Option[] \| Group[]` | `undefined` | Selects value(s) when the Select element is rendered     |
+| **searchSensitivity?** | `number` (0.0 to 1.0)             | `undefined` | Search matching sensitivity                              |
+| **onOptionSelect?**    | `(value: Option) => void`         | `undefined` | Option Select callback                                   |
+| **onSelectedChange?**  | `(values: Option[]) => void`      | `undefined` | Selected value(s) callback                               |
+| **onInputChange?**     | `(values: string) => void`        | `undefined` | Input value callback                                     |
 
 ## Prop Considerations
 

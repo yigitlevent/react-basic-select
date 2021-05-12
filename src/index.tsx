@@ -17,6 +17,7 @@ export interface SelectProps {
 	createString?: string;
 	placeholder?: string;
 	defaultSelected?: string[];
+	searchSensitivity?: number;
 	onOptionSelect?: (value: Option) => void;
 	onSelectedChange?: (values: Option[]) => void;
 	onInputChange?: (values: string) => void;
@@ -50,34 +51,26 @@ export default function Select(props: SelectProps): JSX.Element {
 
 	const inputRef = createRef<HTMLInputElement>();
 	const optionsRef = createRef<HTMLDivElement>();
-
+	
 	const [showOptions, setShowOptions] = useState(false);
-
-	const switchOptions = useCallback((close: boolean) => {
-		if (!props.disabled) { setShowOptions(close); }
-	}, [props.disabled]);
 
 	const maybeCloseOptions = useCallback((event: MouseEvent): void => {
 		const test = !((event.target as HTMLElement).parentElement?.parentElement?.classList.contains("bs_select"));
-		if (test) switchOptions(false);
-	}, [switchOptions]);
+		if (test) setShowOptions(false);
+	}, []);
 
-	const filterOptions = useCallback((searchValue: string) => {
-		console.log(mainOptions);
-		console.log(userOptions);
-		console.log();
-
+	const filterOptions = useCallback((searchValue: string): void => {
 		if (props.search && searchValue.length > 0) {
-			const options = { keys: ["value"], includeScore: false, threshold: 0.05 };
+			const options = { keys: ["value"], includeScore: false, threshold: (props.searchSensitivity) ? props.searchSensitivity : 0.05 };
 			const result = new Fuse([...mainOptions, ...userOptions], options).search(searchValue);
 			setFilteredOptions(result.map((v) => v.item));
 		}
 		else {
 			setFilteredOptions(mainOptions);
 		}
-	}, [mainOptions, props.search, userOptions]);
+	}, [mainOptions, props.search, props.searchSensitivity, userOptions]);
 
-	const selectOption = (value?: Option) => {
+	const selectOption = useCallback((value?: Option): void => {
 		if (value) {
 			if (props.onOptionSelect) props.onOptionSelect(value);
 
@@ -102,25 +95,13 @@ export default function Select(props: SelectProps): JSX.Element {
 				if (props.onSelectedChange) props.onSelectedChange(newSelected);
 			}
 		}
-	};
+	}, [mainOptions, props, selectedOptions, userOptions]);
 
-	useEffect(() => {
-		if (props.options.length > 0) {
-			if (typeof props.options[0] === "string") { setMainOptions(flattenStringArray(props.options as string[])); }
-			else if ((props.options[0] as Group).options) { setMainOptions(flattenGroupArray(props.options as Group[], props.appendGroupValue)); }
-			else { setMainOptions(props.options as Option[]); }
-		}
-		else { setMainOptions([]); }
-	}, [setMainOptions, props.options, props.appendGroupValue]);
-
-	useEffect(() => {
-		setFilteredOptions(mainOptions);
-	}, [mainOptions, setFilteredOptions]);
-
-	useEffect(() => {
-		document.addEventListener("click", (e) => maybeCloseOptions(e));
-		return () => { document.removeEventListener("click", (e) => maybeCloseOptions(e)); };
-	}, [mainOptions, maybeCloseOptions]);
+	const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValues(event.target.value);
+		filterOptions(event.target.value);
+		if (props.onInputChange) props.onInputChange(event.target.value);
+	}, [filterOptions, props]);
 
 	const selectedElements = selectedOptions.map((v) => {
 		return <span key={v.name} className="bs_selected" onClick={() => selectOption(v)}>{v.name}</span>;
@@ -136,12 +117,34 @@ export default function Select(props: SelectProps): JSX.Element {
 			`}
 			onClick={() => {
 				if (!v.header) selectOption(v);
-				if (props.closeOnSelect) switchOptions(false);
+				if (props.closeOnSelect) setShowOptions(false);
 			}}
 		>
 			{v.name}
 		</div>;
 	});
+
+	useEffect(() => {
+		if (props.options.length > 0) {
+			if (typeof props.options[0] === "string") { setMainOptions(flattenStringArray(props.options as string[])); }
+			else if ((props.options[0] as Group).options) { setMainOptions(flattenGroupArray(props.options as Group[], props.appendGroupValue)); }
+			else { setMainOptions(props.options as Option[]); }
+		}
+		else { setMainOptions([]); }
+	}, [setMainOptions, props.options, props.appendGroupValue]);
+
+	useEffect(() => {
+		setFilteredOptions(mainOptions);
+	}, [mainOptions, setFilteredOptions]);
+
+	useEffect(() => {
+		document.addEventListener("click", maybeCloseOptions);
+		return () => { document.removeEventListener("click", maybeCloseOptions); };
+	}, [mainOptions, maybeCloseOptions]);
+
+	useEffect(() => {
+		return () => { setShowOptions(false); };
+	}, [setShowOptions]);
 
 	return (
 		<div className="bs_select">
@@ -158,16 +161,16 @@ export default function Select(props: SelectProps): JSX.Element {
 						className="bs_input"
 						type="text"
 						readOnly={(props.disabled) ? props.disabled : undefined}
-						placeholder={(props.placeholder) ? props.placeholder : undefined}
+						placeholder={
+							(props.placeholder)
+								? props.placeholder
+								: undefined
+						}
 						value={inputValue}
-						onChange={(e) => {
-							setInputValues(e.target.value);
-							filterOptions(e.target.value);
-							if (props.onInputChange) props.onInputChange(e.target.value);
-						}}
-						onFocus={() => switchOptions(true)}
+						onChange={(e) => { onChange(e); }}
+						onFocus={() => setShowOptions(true)}
 					/>
-					: <div className="bs_input" onClick={() => switchOptions(true)}>
+					: <div className="bs_input" onClick={() => setShowOptions(true)}>
 						{(props.placeholder) ? props.placeholder : ""}
 					</div>
 				}
