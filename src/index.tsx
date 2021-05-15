@@ -51,7 +51,7 @@ export default function Select(props: SelectProps): JSX.Element {
 
 	const inputRef = createRef<HTMLInputElement>();
 	const optionsRef = createRef<HTMLDivElement>();
-	
+
 	const [showOptions, setShowOptions] = useState(false);
 
 	const maybeCloseOptions = useCallback((event: MouseEvent): void => {
@@ -66,7 +66,7 @@ export default function Select(props: SelectProps): JSX.Element {
 			setFilteredOptions(result.map((v) => v.item));
 		}
 		else {
-			setFilteredOptions(mainOptions);
+			setFilteredOptions([...mainOptions, ...userOptions]);
 		}
 	}, [mainOptions, props.search, props.searchSensitivity, userOptions]);
 
@@ -78,6 +78,7 @@ export default function Select(props: SelectProps): JSX.Element {
 				&& mainOptions.findIndex((v) => v.value === value.value) === -1
 				&& userOptions.findIndex((v) => v.value === value.value) === -1) {
 				setUserOptions([...userOptions, value]);
+				setInputValues("");
 			}
 
 			if ((props.create || mainOptions.findIndex((v) => v.value === value.value) > -1)) {
@@ -91,7 +92,10 @@ export default function Select(props: SelectProps): JSX.Element {
 					const index = newSelected.findIndex((v) => v.value === value.value);
 					if (index > -1) { newSelected.splice(index, 1); }
 				}
+
 				setSelectedOptions(newSelected);
+				setInputValues("");
+
 				if (props.onSelectedChange) props.onSelectedChange(newSelected);
 			}
 		}
@@ -100,6 +104,7 @@ export default function Select(props: SelectProps): JSX.Element {
 	const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValues(event.target.value);
 		filterOptions(event.target.value);
+
 		if (props.onInputChange) props.onInputChange(event.target.value);
 	}, [filterOptions, props]);
 
@@ -109,7 +114,7 @@ export default function Select(props: SelectProps): JSX.Element {
 
 	const selectedStrings = selectedOptions.map((v) => { return v.name; });
 
-	const filteredElements = [...filteredOptions, ...userOptions].map((v) => {
+	const filteredElements = filteredOptions.map((v) => {
 		return <div key={v.name}
 			className={`
 				${(v.header) ? "bs_header" : "bs_option"}
@@ -134,8 +139,22 @@ export default function Select(props: SelectProps): JSX.Element {
 	}, [setMainOptions, props.options, props.appendGroupValue]);
 
 	useEffect(() => {
-		setFilteredOptions(mainOptions);
-	}, [mainOptions, setFilteredOptions]);
+		setFilteredOptions([...mainOptions, ...userOptions]);
+	}, [mainOptions, userOptions]);
+
+	useEffect(() => {
+		if (props.defaultSelected) {
+			setUserOptions([]);
+			const flattened = flattenStringArray(props.defaultSelected);
+			const tempUserOptions: Option[] = [];
+			for (const key in flattened) {
+				if (mainOptions.findIndex((v) => v.value === flattened[key].value) === -1) {
+					tempUserOptions.push(flattened[key]);
+				}
+			}
+			setUserOptions(tempUserOptions);
+		}
+	}, [mainOptions, props.defaultSelected]);
 
 	useEffect(() => {
 		document.addEventListener("click", maybeCloseOptions);
@@ -161,17 +180,13 @@ export default function Select(props: SelectProps): JSX.Element {
 						className="bs_input"
 						type="text"
 						readOnly={(props.disabled) ? props.disabled : undefined}
-						placeholder={
-							(props.placeholder)
-								? props.placeholder
-								: undefined
-						}
+						placeholder={(props.placeholder && selectedOptions.length === 0) ? props.placeholder : undefined}
 						value={inputValue}
 						onChange={(e) => { onChange(e); }}
 						onFocus={() => setShowOptions(true)}
 					/>
 					: <div className="bs_input" onClick={() => setShowOptions(true)}>
-						{(props.placeholder) ? props.placeholder : ""}
+						{(props.placeholder && selectedOptions.length === 0) ? props.placeholder : ""}
 					</div>
 				}
 
@@ -180,7 +195,7 @@ export default function Select(props: SelectProps): JSX.Element {
 			{(showOptions) ?
 				<div className="bs_options" ref={optionsRef}>
 
-					{(props.create && filteredElements.length === 0 && inputValue.length > 0)
+					{(props.create && inputValue.length > 0)
 						? <div className="bs_optionnew"
 							onClick={() => {
 								if (inputRef.current) selectOption({ name: inputValue, value: inputValue.toLowerCase() });
@@ -190,7 +205,7 @@ export default function Select(props: SelectProps): JSX.Element {
 						: null
 					}
 
-					{(filteredElements.length === 0)
+					{(props.search && filteredElements.length === 0)
 						? <div className="bs_none">Searched value cannot be found...</div>
 						: filteredElements
 					}
