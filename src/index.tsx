@@ -16,7 +16,7 @@ export interface SelectProps {
 	create?: boolean;
 	createString?: string;
 	placeholder?: string;
-	defaultSelected?: string[];
+	defaultSelected?: Option[];
 	searchSensitivity?: number;
 	onOptionSelect?: (value: Option) => void;
 	onSelectedChange?: (values: Option[]) => void;
@@ -44,7 +44,7 @@ export default function Select(props: SelectProps): JSX.Element {
 	const [mainOptions, setMainOptions] = useState<Option[]>([]);
 	const [userOptions, setUserOptions] = useState<Option[]>([]);
 
-	const [selectedOptions, setSelectedOptions] = useState<Option[]>((props.defaultSelected) ? flattenStringArray(props.defaultSelected) : []);
+	const [selectedOptions, setSelectedOptions] = useState<Option[]>((props.defaultSelected) ? props.defaultSelected : []);
 	const [filteredOptions, setFilteredOptions] = useState<Option[]>([]);
 
 	const [inputValue, setInputValues] = useState<string>("");
@@ -145,7 +145,7 @@ export default function Select(props: SelectProps): JSX.Element {
 	useEffect(() => {
 		if (props.defaultSelected) {
 			setUserOptions([]);
-			const flattened = flattenStringArray(props.defaultSelected);
+			const flattened = props.defaultSelected;
 			const tempUserOptions: Option[] = [];
 			for (const key in flattened) {
 				if (mainOptions.findIndex((v) => v.value === flattened[key].value) === -1) {
